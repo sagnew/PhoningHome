@@ -28,8 +28,11 @@ def play_space_sounds():
     track_url = random_sound['stream_url']
     stream_url = soundcloud_client.get(track_url, allow_redirects=False)
 
-    message_body = ('An explanation of the "space sound" you just heard: \n{}'
+    message_body = ('An explanation of the "space sound" you heard: \n{}'
                     .format(random_sound['description']))
+    if not random_sound['description']:
+        message_body = ('Title of the "space sound" you heard: \n{}'
+                        .format(random_sound['title']))
 
     twilio_client.messages.create(to=request.form['From'],
                                   from_='+17372105989',

@@ -24,8 +24,16 @@ def play_space_sounds():
 
     space_sounds_data = requests.get(sounds_url, params=request_params).json()
     space_sounds = space_sounds_data['results']
-    track_url = choice(space_sounds)['stream_url']
+    random_sound = choice(space_sounds)
+    track_url = random_sound['stream_url']
     stream_url = soundcloud_client.get(track_url, allow_redirects=False)
+
+    message_body = ('An explanation of the "space sound" you just heard: \n{}'
+                    .format(random_sound['description']))
+
+    twilio_client.messages.create(to=request.form['From'],
+                                  from_='+17372105989',
+                                  body=message_body)
 
     response = twiml.Response()
     response.play(stream_url.location)

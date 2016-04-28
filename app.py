@@ -17,6 +17,6 @@ def get_mars_img():
     photos = response['photos']
     random_photo_url = choice(photos)['img_src']
 
-    return redirect(random_photo_url)
+    return random_photo_url
 
 app.run(debug=True)
